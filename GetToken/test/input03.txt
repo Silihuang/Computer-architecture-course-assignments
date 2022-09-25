@@ -1,0 +1,63 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package downloadphoto;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
+/**
+ *
+ * @author KFN
+ */
+public class Main {
+
+  /**
+   * @param args the command line arguments
+   */
+  static String photoURL = "";
+
+  public static void main(String[] args) throws Throwable {
+    String filename = "982_PL.csv";
+    String filePath = ".\\" +  filename.substring(0, filename.indexOf(".")) + "\\" ;
+    if (args.length != 0 ) {
+      filename = args[0];
+    }
+    System.out.println(filename);
+    FileInputStream fin = new FileInputStream(new File(filename));
+    BufferedReader br = new BufferedReader(new InputStreamReader(fin, "x-windows-950"));
+    String inputline = br.readLine();
+    File dir = new File( filePath );
+    if ( dir.exists() && dir.isDirectory() )
+      ;
+    else
+      dir.mkdir();
+    
+    while (inputline != null) {
+      inputline = inputline.trim();
+      System.out.println(inputline);
+      new DownloadFileByURL(photoURL, inputline, filePath ).start();
+      inputline = br.readLine();
+    } // end while
+    br.close();
+    fin.close();
+
+  }
+}
+END_OF_FILE
+
+1
+3
+printf
+3
+END
+4
+60
+2
+5

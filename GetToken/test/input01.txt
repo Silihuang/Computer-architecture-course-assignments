@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <iostream.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include "Lexical_Analysis.h"
+#include "Systax_Analysis.h"
+
+
+void Output();
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//**************************  Main()  **************************//
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+int main(int argc,char* argv[]){
+
+  Lexical_Analysis();         // 切token
+
+  Systax_Analysis();
+
+  Output();                   // 輸出結果
+
+  //standard way to stop in VC
+  //not needed if directly execute.exe
+  char done;
+  fflush(stdin);
+  printf("\nPress any character>");
+  scanf(&done);
+  return 0;
+
+} // end main()
+
+
+void Output()
+{
+  Str100 fileName;
+  
+  printf("\nOutput File Name : ");
+  scanf("%s",fileName);
+
+  FILE *fptr = fopen(fileName,"w"); // 開啟檔案
+
+  fprintf(fptr,"Table6 :\n");
+
+  for(int x = 1;x < amountOfTable6;x++)
+    fprintf(fptr,"\n %s",table6[x]);
+  
+  fclose(fptr); 
+
+
+
+  printf("\nTable 6 : \n");
+  for(int a = 1;a < amountOfTable6;a++)
+    printf("\n %s",table6[a]);
+  printf("\n\n==================================================\n");
+
+  printf("\nTable 3 : \n");
+  for(int b = 0;b < 100;b++)
+    if(strcmp(table3[b],"\0") != 0)
+      printf("\n%2d : %s",b,table3[b]);
+  printf("\n\n==================================================\n");
+
+  printf("\nTable 4 : \n");
+  for(int c = 0;c < 100;c++)
+    if(strcmp(table4[c],"\0") != 0)
+      printf("\n%2d : %s",c,table4[c]);
+  printf("\n\n==================================================\n");
+
+  printf("\nTable 5 : \n");
+  printf("\n     name    subroutine type   pointer\n");
+  for(int i = 0;i < 100;i++)
+    if(strcmp(table5[i].name,"\0") != 0)
+      printf("\n%d : %s  \t  %d   \t %d    \t  %d",i,table5[i].name,table5[i].subroutine,table5[i].type,table5[i].pointer);
+  printf("\n\n==================================================\n");
+
+  printf("\nTable 7 : \n");
+  for(int j = 1;j <= amountOfTable7;j++)
+    printf("\n%2d : %d",j,table7[j]);
+
+  printf("\n======================= END ======================\n");
+
+}
+
+
+//////////////////////////////////////////////////////////////////
+///////////////////////////// = END = ////////////////////////////
+//////////////////////////////////////////////////////////////////
+END_OF_FILE
+
+1
+2
+3
+printf
+3
+END
+4
+10
+5

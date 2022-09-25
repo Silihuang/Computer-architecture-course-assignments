@@ -1,0 +1,114 @@
+#include<stdio.h>
+#include<iostream.h>
+
+int main()
+{
+	int allPerson = 0,teller[256],waitTime=0,arriveTime[256],spendTime[256], i=0,leftTime[256];
+	for (int k=0;k<256;k++)
+	{
+		teller[k]=0 ;
+		arriveTime[k]=0 ;
+		spendTime[k]=0 ;
+		leftTime[256] = 0;
+	}                   
+
+//==================================開檔============================================	
+
+	FILE *file1;
+	char name1[256];
+	printf("Welcome!\n");
+	printf("please input file name : ");
+
+    gets(name1);//輸入開啟名單的檔案名子
+	file1 = fopen(name1,"r");
+
+	if( file1==NULL)//如果沒有這個檔案則關閉程式
+	{
+		printf("error\n");
+		return 0;
+	}
+	else
+	{
+		while( !feof(file1))
+		{
+			fscanf(file1,"%d",&arriveTime[i]);
+			fscanf(file1,"%d",&spendTime[i]);
+			i++ ;
+		}   
+		allPerson = i-1;
+	}
+		printf("\nenter time \n");
+	for(i=0;i < allPerson;i++)
+		if(arriveTime[i]>9)
+			printf("      %d              %d\n",arriveTime[i],spendTime[i]);
+		else
+			printf("      %d               %d\n",arriveTime[i],spendTime[i]);
+
+//=================================================================================
+
+//==========================計算平均時間===========================================
+	int tellerNum,j=0,minOkTime = 99999,minOk=0;
+	float average = 0;
+	bool first = true;
+    printf("enter teller :");
+    scanf("%d",&tellerNum);
+    if(tellerNum >= allPerson)
+	{
+		for(i=0;i<allPerson;i++)
+			teller[i] = spendTime[i];
+	}
+	else 
+	{
+		for(i=0;i<tellerNum;i++)//先把櫃檯排滿
+		{
+			teller[i] = spendTime[i];
+	        leftTime[i] = spendTime[i] + arriveTime[i];//算出離開的時間
+		}
+		printf("wait time\n");
+		for(j=tellerNum;j<allPerson;j++)
+		{
+			for(i=0;i<tellerNum;i++)//找出最少的時間
+			{
+				if(minOkTime > leftTime[i])
+				{
+			    	minOkTime = leftTime[i];
+					minOk = i ;
+				}
+			}
+			teller[minOk] = spendTime[j] + teller[minOk];//最少時間的服務員再多排一個並把時間加上去
+			waitTime = waitTime + leftTime[minOk] - arriveTime[j];
+			if(waitTime<0)
+				printf("    0\n");
+			else
+				printf("    %d\n",waitTime);
+			leftTime[minOk] = 	spendTime[j] + leftTime[minOk] ;
+			
+			minOkTime = leftTime[minOk];//先假設為最小的
+		}
+
+
+	}
+	average = waitTime/allPerson;
+	printf("avrerage  %f\n",average);
+//=================================================================================
+
+//==========================寫檔=================================================
+	FILE *file2;
+    file2 = fopen( "DS9427136.txt", "w" ); 
+	fprintf(file2,"average waiting time of a customer :%f\n",average);
+	for(i=0;i<tellerNum;i++)
+		fprintf(file2,"the amount of work done by %d teller is :%d\n",i+1,teller[i]) ;
+	fclose(file1);
+	fclose(file2);
+	return 0;
+
+}
+END_OF_FILE
+
+1
+2
+3
+printf
+4
+9
+5
