@@ -1,3 +1,3 @@
 # Computer-architecture-course assignments
-###  College course : freshman year 
+###  College-course in freshman year
 
